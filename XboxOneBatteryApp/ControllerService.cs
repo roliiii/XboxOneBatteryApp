@@ -21,14 +21,22 @@ namespace XboxOneBatteryApp
             if (!controller.IsConnected)
                 return XboxOneBatteryApp.Resource.notConnected;
 
-            if (getBatteryInfo().BatteryType == BatteryType.Wired || getBatteryInfo().BatteryType == BatteryType.Disconnected)
+            BatteryInformation batteryInformation = getBatteryInfo();
+
+            if (batteryInformation.BatteryType == BatteryType.Wired)
                 return XboxOneBatteryApp.Resource.wired;
                     
-            return getBatteryLevelIcon(getBatteryInfo());
+            return getBatteryLevelIcon(batteryInformation);
         }
 
         private System.Drawing.Icon getBatteryLevelIcon(BatteryInformation batteryInfo)
         {
+            while(batteryInfo.BatteryType == BatteryType.Disconnected)
+            {
+                System.Threading.Thread.Sleep(100);
+                batteryInfo = getBatteryInfo();
+            }
+
             switch (batteryInfo.BatteryLevel)
             {
                 case BatteryLevel.Empty:
