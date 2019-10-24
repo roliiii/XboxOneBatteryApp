@@ -21,7 +21,7 @@ namespace XboxOneBatteryApp
         {
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += updateTray;
-            dispatcherTimer.Interval = new TimeSpan(0, 5, 0);
+            dispatcherTimer.Interval = new TimeSpan(0, 1, 0);
             dispatcherTimer.Start();
         }
 
@@ -46,14 +46,10 @@ namespace XboxOneBatteryApp
             System.Windows.Application.Current.Shutdown();
         }
 
-        private void updateTray()
-        {
-            updateTray(null, null);
-        }
-
         private void updateTray(object sender, EventArgs e)
         {
             nIcon.Icon = controllerService.getIcon();
         }
+
     }
 }
